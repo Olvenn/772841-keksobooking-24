@@ -1,17 +1,7 @@
-const getRendomNumberFormRange = (minNumber, maxNumber, includLastNumber = 1) => (Math.random() * (maxNumber - minNumber + includLastNumber)) + minNumber;
-
 const MIN_LONGITUDE = 35.65000;
 const MAX_LONGITUDE = 35.70000;
 const MIN_LATITUDE = 139.70000;
 const MAX_LATITUDE = 139.80000;
-
-const longitude = () => getRendomNumberFormRange(MIN_LONGITUDE, MAX_LONGITUDE, 0.00001).toFixed(5);
-const latitude = () => getRendomNumberFormRange(MIN_LATITUDE, MAX_LATITUDE, 0.00001).toFixed(5);
-
-const spotLocation = {
-  lat: longitude(),
-  lng: latitude(),
-};
 
 const TYPE_ACCOMMODATIONS = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
@@ -27,6 +17,19 @@ const MAX_GUEST = 100;
 const CHECK_TIMES = ['12:00', '13:00', '14:00'];
 
 const FEATURES =  ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+
+const OFFERSLENGTH = 10;
+
+const getRendomNumberFormRange = (minNumber, maxNumber, includLastNumber = 1) => (Math.random() * (maxNumber - minNumber + includLastNumber)) + minNumber;
+
+const longitude = () => getRendomNumberFormRange(MIN_LONGITUDE, MAX_LONGITUDE, 0.00001).toFixed(5);
+const latitude = () => getRendomNumberFormRange(MIN_LATITUDE, MAX_LATITUDE, 0.00001).toFixed(5);
+
+const spotLocation = {
+  lat: longitude(),
+  lng: latitude(),
+};
+
 const featuresLength = Math.floor(getRendomNumberFormRange(1, FEATURES.length - 1));
 
 const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
@@ -57,9 +60,7 @@ const getNonrepeatingArrayFromArrayRandomLength = (arrayWidhData, newArryLength)
   return newArray;
 };
 
-const OFFERSLENGTH = 10;
-
-let authorNumbersArray = Array.from({ length: OFFERSLENGTH }, (key, index) => index + 1);
+let authorNumbersArray = Array.from({ length: OFFERSLENGTH +  OFFERSLENGTH}, (key, index) => index + 1);
 
 authorNumbersArray = authorNumbersArray.map((element) => element < 10 ? (0 + String(+ element)) : String(element));
 
@@ -94,5 +95,7 @@ const createOffer = () => {
   return offerArray;
 };
 
-const createOffersArray = () => Array.from({length: OFFERSLENGTH}, createOffer);
+const createOffersArray = () => Array.from({length: 10}, createOffer);
 createOffersArray();
+
+
