@@ -97,6 +97,3 @@ const createOffer = () => {
 
 const createOffersArray = () => Array.from({length: 10}, createOffer);
 createOffersArray();
-
-
-
