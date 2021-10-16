@@ -39,7 +39,8 @@ const createOffer = () => {
     author: {
       avatar: `img/avatars/user${addZeroToBegin(generatePhotoAvatarId())}/.png`,
     },
-    offer: { title: 'Заголовок предложения',
+    offer: {
+      title: 'Заголовок предложения',
       address: `${spotLocation.lat}, ${spotLocation.lng}`,
       price: Math.floor(getRandomPositiveInteger(MIN_PRICE, MAX_PRICE)),
       accommodationType: TYPE_ACCOMMODATIONS[Math.round(getRandomPositiveInteger(0, TYPE_ACCOMMODATIONS.length - 1))],

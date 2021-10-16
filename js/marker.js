@@ -1,3 +1,1 @@
-const marker = {};
 
-export {marker};
