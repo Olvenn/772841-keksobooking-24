@@ -11,3 +11,4 @@ if (document.readyState === 'DOMContentLoaded' || !mapLoad) {
 
 const allAdvertisements = createOffersArray();
 renderCardsList(allAdvertisements);
+
