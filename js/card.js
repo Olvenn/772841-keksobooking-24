@@ -13,6 +13,7 @@ const AccommodationTypes = {
   HOTEL: 'Отель',
 };
 
+
 const renderCardsList = (advertisementsArray) => {
 
   const advertisementListFragmentElement = document.createDocumentFragment();

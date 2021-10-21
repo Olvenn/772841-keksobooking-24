@@ -5,6 +5,7 @@ const MAX_LONGITUDE = 35.70000;
 const MIN_LATITUDE = 139.70000;
 const MAX_LATITUDE = 139.80000;
 
+
 const TYPE_ACCOMMODATIONS = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
 const MIN_PRICE = 0;

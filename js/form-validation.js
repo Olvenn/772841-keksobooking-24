@@ -91,6 +91,8 @@ const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptions
     }
   }
 
+
+
   if (roomValues.length !== 1) {
     advertisementSelectGuestsElement.setCustomValidity('Выберите количество гостей.');
   } else {
