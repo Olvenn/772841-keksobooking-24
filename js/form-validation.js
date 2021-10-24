@@ -1,11 +1,8 @@
-const NAME_LENGTH = {
-  Min: 30,
-  Max: 100,
-};
+import {NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE} from './constant.js';
 
 const advertisementInputTitleElement = document.querySelector('.ad-form__title');
 
-advertisementInputTitleElement.addEventListener('input', () => {
+const advertisementTitleInputHandler = () => {
   const valueLength = advertisementInputTitleElement.value.length;
 
   if (valueLength < NAME_LENGTH.Min) {
@@ -17,17 +14,15 @@ advertisementInputTitleElement.addEventListener('input', () => {
   }
 
   advertisementInputTitleElement.reportValidity();
+};
+
+advertisementInputTitleElement.addEventListener('input', () => {
+  advertisementTitleInputHandler();
 });
 
 const advertisementInputPriceElement = document.querySelector('.ad-form__price');
 
-const PRICE_VALUE = {
-  Min: 0,
-  Max: 1000000,
-};
-
-advertisementInputPriceElement.addEventListener('input', () => {
-
+const advertisementPriceInputHandler = () => {
   const valuePrice = advertisementInputPriceElement.value;
 
   if (valuePrice === '') {
@@ -41,6 +36,10 @@ advertisementInputPriceElement.addEventListener('input', () => {
   }
 
   advertisementInputPriceElement.reportValidity();
+};
+
+advertisementInputPriceElement.addEventListener('input', () => {
+  advertisementPriceInputHandler();
 });
 
 const advertisementInputAddressElement = document.querySelector('.ad-form input[name="address"]');
@@ -48,7 +47,8 @@ const advertisementInputAddressElement = document.querySelector('.ad-form input[
 advertisementInputAddressElement.addEventListener('keydown', (evt) => {
   evt.preventDefault();
 });
-advertisementInputAddressElement.addEventListener('focus', () => {
+
+const advertisementAddressFocusHandler = () => {
   const address = advertisementInputAddressElement.value;
   if (address === '') {
     advertisementInputAddressElement.setCustomValidity('Выберите точку на карте, где находится ваше жилье.');
@@ -56,43 +56,37 @@ advertisementInputAddressElement.addEventListener('focus', () => {
     advertisementInputAddressElement.setCustomValidity('');
   }
   advertisementInputAddressElement.reportValidity();
-});
-
-const ROOM_GUESTS = {
-  1: [1],
-  100: [0],
-  2: [1, 2],
-  3: [1, 2, 3],
 };
 
-const advertisementSelectRoomElement = document.querySelector('#room_number');
-const advertisementSelectGuestsElement = document.querySelector('#capacity');
-const advertisementOptionGuestsElements = document.querySelector('#capacity').options;
+advertisementInputAddressElement.addEventListener('focus', () => {
+  advertisementAddressFocusHandler();
+});
 
-for (let i = 1; i < advertisementSelectRoomElement.length; i++) {
-  advertisementOptionGuestsElements[i].disabled = true;
+const advertisementSelectRoomElement = document.querySelector('#room_number');
+// const advertisementSelectRoomElements = advertisementSelectRoomElement.options;
+const advertisementSelectGuestsElement = document.querySelector('#capacity');
+const advertisementOptionGuestsElements = advertisementSelectGuestsElement.options;
+
+for (const GuestsNumber of advertisementOptionGuestsElements) {
+  GuestsNumber.setAttribute('disabled', true);
 }
 
 const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptionsElement, changeElement) => {
   const selectedElementValue = selectedElement.value;
   const roomValues = relationArray[selectedElementValue];
-  const valueSelected = roomValues.includes(+(changeElement.value));
+  const valueSelected = roomValues.includes((changeElement.value));
 
-  for (let i = 0; i < relationOptionsElement.length; i++) {
+  for (const relationOption of relationOptionsElement) {
+    relationOption.removeAttribute('disabled');
 
-    relationOptionsElement[i].disabled = false;
-
-    if(!roomValues.includes(+(relationOptionsElement[i].value))) {
-      relationOptionsElement[i].disabled = true;
+    if(!roomValues.includes((relationOption.value))) {
+      relationOption.setAttribute('disabled', true);
     } else {
       if(!valueSelected) {
-        relationOptionsElement[i].selected = true;
+        relationOption.selected = true;
       }
     }
   }
-
-
-
   if (roomValues.length !== 1) {
     advertisementSelectGuestsElement.setCustomValidity('Выберите количество гостей.');
   } else {
@@ -102,25 +96,21 @@ const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptions
 };
 
 advertisementSelectRoomElement.addEventListener('change', () => {
-  setRoomGuestCorrelation(advertisementSelectRoomElement, ROOM_GUESTS , advertisementOptionGuestsElements, advertisementSelectGuestsElement);
+  setRoomGuestCorrelation(advertisementSelectRoomElement, ROOM_GUESTS2 , advertisementOptionGuestsElements, advertisementSelectGuestsElement);
 });
-
-const TYPE_PRICE = {
-  bungalow: 0,
-  flat: 1000,
-  hotel: 3000,
-  house: 5000,
-  palace: 10000,
-};
 
 const typeSelectElement = document.querySelector('#type');
 
-typeSelectElement.addEventListener('change', () => {
+const typeSelectElementChangeHandler = () => {
   const typeValue = document.querySelector('#type').value;
   const pricePlaceholder = TYPE_PRICE[typeValue];
   const priceElement = document.querySelector('#price');
   priceElement.placeholder = pricePlaceholder;
   priceElement.min = pricePlaceholder;
+};
+
+typeSelectElement.addEventListener('change', () => {
+  typeSelectElementChangeHandler();
 });
 
 const timeinElement = document.querySelector('#timein');
