@@ -5,13 +5,14 @@ const MAX_LONGITUDE = 35.70000;
 const MIN_LATITUDE = 139.70000;
 const MAX_LATITUDE = 139.80000;
 
+
 const TYPE_ACCOMMODATIONS = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
 const MIN_PRICE = 0;
 const MAX_PRICE = 1000000;
 
-const MIN_ROOM = 1;
-const MAX_ROOM = 25;
+const MIN_ROOM = 94;
+const MAX_ROOM = 100;
 
 const MIN_GUEST = 1;
 const MAX_GUEST = 100;
@@ -22,7 +23,9 @@ const FEATURES =  ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'condi
 
 const PHOTOS = ['https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/duonguyen-8LrGtIxxa4w.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg', 'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg'];
 
-const OFFERSLENGTH = 10;
+const OFFERSLENGTH = 5;
+
+const generatePhotoAvatarId = createUniqueIdGenerator();
 
 const createOffer = () => {
   const longitude = () => getRandomPositiveFloat(MIN_LONGITUDE, MAX_LONGITUDE, 5);
@@ -33,11 +36,9 @@ const createOffer = () => {
     lng: latitude(),
   };
 
-  const generatePhotoAvatarId = createUniqueIdGenerator();
-
   const offerArray = {
     author: {
-      avatar: `img/avatars/user${addZeroToBegin(generatePhotoAvatarId())}/.png`,
+      avatar: `img/avatars/user${addZeroToBegin(generatePhotoAvatarId())}.png`,
     },
     offer: {
       title: 'Заголовок предложения',
