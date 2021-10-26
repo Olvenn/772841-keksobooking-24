@@ -40,8 +40,7 @@ const PRICE_VALUE = {
   Max: 1000000,
 };
 
-//Value количества комнат и гостей
-const ROOM_GUESTS2 = {
+const ROOM_GUESTS = {
   '1': ['1'],
   '100': ['0'],
   '2': ['1', '2'],
@@ -55,5 +54,5 @@ const TYPE_PRICE = {
   house: 5000,
   palace: 10000,
 };
-//хочу писать комментарии
+
 export {ACCOMMODATIONTYPES, MIN_LONGITUDE, MAX_LONGITUDE, MIN_LATITUDE, MAX_LATITUDE, TYPE_ACCOMMODATIONS, MIN_PRICE, MAX_PRICE, MIN_ROOM, MAX_ROOM, MIN_GUEST, MAX_GUEST, CHECK_TIMES, FEATURES, PHOTOS, OFFERSLENGTH, NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE};

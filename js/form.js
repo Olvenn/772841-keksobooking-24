@@ -24,5 +24,3 @@ const makeFormsActive = () => {
 };
 
 export {makeFormsDisabled, makeFormsActive};
-
-

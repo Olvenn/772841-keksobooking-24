@@ -1,7 +1,6 @@
 import {getRandomPositiveInteger, getRandomPositiveFloat, getNonrepeatingArrayFromArrayRandomLength, createUniqueIdGenerator, addZeroToBegin} from './util.js';
 import {MIN_LONGITUDE, MAX_LONGITUDE, MIN_LATITUDE, MAX_LATITUDE, TYPE_ACCOMMODATIONS, MIN_PRICE, MAX_PRICE, MIN_ROOM, MAX_ROOM, MIN_GUEST, MAX_GUEST, CHECK_TIMES, FEATURES, PHOTOS, OFFERSLENGTH} from './constant.js';
 
-
 const generatePhotoAvatarId = createUniqueIdGenerator();
 
 const createOffer = () => {
@@ -36,7 +35,6 @@ const createOffer = () => {
     },
   };
 };
-
 
 const createOffersArray = () => Array.from({length: OFFERSLENGTH}, createOffer);
 

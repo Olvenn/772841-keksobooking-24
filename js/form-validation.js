@@ -63,12 +63,11 @@ advertisementInputAddressElement.addEventListener('focus', () => {
 });
 
 const advertisementSelectRoomElement = document.querySelector('#room_number');
-// const advertisementSelectRoomElements = advertisementSelectRoomElement.options;
 const advertisementSelectGuestsElement = document.querySelector('#capacity');
 const advertisementOptionGuestsElements = advertisementSelectGuestsElement.options;
 
-for (const GuestsNumber of advertisementOptionGuestsElements) {
-  GuestsNumber.setAttribute('disabled', true);
+for (const guestsNumber of advertisementOptionGuestsElements) {
+  guestsNumber.setAttribute('disabled', true);
 }
 
 const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptionsElement, changeElement) => {
@@ -83,7 +82,7 @@ const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptions
       relationOption.setAttribute('disabled', true);
     } else {
       if(!valueSelected) {
-        relationOption.selected = true;
+        relationOption.setAttribute('selected', true);
       }
     }
   }
@@ -96,7 +95,7 @@ const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptions
 };
 
 advertisementSelectRoomElement.addEventListener('change', () => {
-  setRoomGuestCorrelation(advertisementSelectRoomElement, ROOM_GUESTS2 , advertisementOptionGuestsElements, advertisementSelectGuestsElement);
+  setRoomGuestCorrelation(advertisementSelectRoomElement, ROOM_GUESTS , advertisementOptionGuestsElements, advertisementSelectGuestsElement);
 });
 
 const typeSelectElement = document.querySelector('#type');
@@ -105,8 +104,8 @@ const typeSelectElementChangeHandler = () => {
   const typeValue = document.querySelector('#type').value;
   const pricePlaceholder = TYPE_PRICE[typeValue];
   const priceElement = document.querySelector('#price');
-  priceElement.placeholder = pricePlaceholder;
-  priceElement.min = pricePlaceholder;
+  priceElement.setAttribute('placeholder', pricePlaceholder);
+  priceElement.setAttribute('min', pricePlaceholder);
 };
 
 typeSelectElement.addEventListener('change', () => {

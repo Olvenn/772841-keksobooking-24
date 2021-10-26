@@ -34,7 +34,6 @@ const renderCard = (advertisement) => {
   }
 
   cardElement.querySelector('.popup__photos').append(photoBlockElement);
-
   cardElement.querySelector('.popup__text--price').textContent = '';
   cardElement.querySelector('.popup__text--price').insertAdjacentHTML('beforebegin', `${advertisement.offer.price} <span>₽/ночь</span>`);
 
