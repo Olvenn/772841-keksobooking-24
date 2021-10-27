@@ -2,7 +2,7 @@ import {createOffersArray} from './data.js';
 import {renderCardsList} from './card.js';
 import {makeFormsDisabled, makeFormsActive} from './form.js';
 
-const mapLoad = false;
+const mapLoad = false;//временно
 
 makeFormsDisabled();
 if (document.readyState === 'DOMContentLoaded' || !mapLoad) {
