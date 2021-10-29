@@ -1,4 +1,4 @@
-import {COORDINATES} from './constant.js';
+import {COORDINATES, ZOOM} from './constant.js';
 import {renderCard} from './card.js';
 import {createOffersArray} from './data.js';
 import {putCoordinatesInForm} from './util.js';
@@ -15,7 +15,7 @@ const map = L.map('map-canvas')
   .setView({
     lat: COORDINATES.Latitude,
     lng: COORDINATES.Longitude,
-  }, 12);
+  }, ZOOM);
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -24,7 +24,7 @@ L.tileLayer(
   },
 ).addTo(map);
 
-const createAdvertisemenPopup = (point) =>  renderCard(point);
+const createAdvertisemenPopup = (point) => renderCard(point);
 
 const mainPinIcon = L.icon({
   iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
@@ -34,8 +34,8 @@ const mainPinIcon = L.icon({
 
 const mainPinMarker = L.marker(
   {
-    lat: 35.6895,
-    lng: 139.692,
+    lat: COORDINATES.Latitude,
+    lng: COORDINATES.Longitude,
   },
   {
     draggable: true,
