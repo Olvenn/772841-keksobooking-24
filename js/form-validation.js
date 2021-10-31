@@ -64,34 +64,26 @@ advertisementInputAddressElement.addEventListener('focus', () => {
 
 const advertisementSelectRoomElement = document.querySelector('#room_number');
 const advertisementSelectGuestsElement = document.querySelector('#capacity');
-const advertisementOptionGuestsElements = advertisementSelectGuestsElement.options;
-
-for (const guestsNumber of advertisementOptionGuestsElements) {
-  guestsNumber.setAttribute('disabled', true);
-}
+const advertisementOptionGuestsElements = document.querySelector('#capacity').options;
 
 const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptionsElement, changeElement) => {
+  for (const guestsNumber of relationOptionsElement) {
+    guestsNumber.setAttribute('disabled', true);
+  }
   const selectedElementValue = selectedElement.value;
   const roomValues = relationArray[selectedElementValue];
   const valueSelected = roomValues.includes((changeElement.value));
 
   for (const relationOption of relationOptionsElement) {
     relationOption.removeAttribute('disabled');
-
     if(!roomValues.includes((relationOption.value))) {
       relationOption.setAttribute('disabled', true);
     } else {
       if(!valueSelected) {
-        relationOption.setAttribute('selected', true);
+        relationOption.selected = true;
       }
     }
   }
-  if (roomValues.length !== 1) {
-    advertisementSelectGuestsElement.setCustomValidity('Выберите количество гостей.');
-  } else {
-    advertisementSelectGuestsElement.setCustomValidity('');
-  }
-  advertisementSelectGuestsElement.reportValidity();
 };
 
 advertisementSelectRoomElement.addEventListener('change', () => {
@@ -100,7 +92,7 @@ advertisementSelectRoomElement.addEventListener('change', () => {
 
 const typeSelectElement = document.querySelector('#type');
 
-const typeSelectElementChangeHandler = () => {
+const typeSelectChangeHandler = () => {
   const typeValue = document.querySelector('#type').value;
   const pricePlaceholder = TYPE_PRICE[typeValue];
   const priceElement = document.querySelector('#price');
@@ -109,7 +101,7 @@ const typeSelectElementChangeHandler = () => {
 };
 
 typeSelectElement.addEventListener('change', () => {
-  typeSelectElementChangeHandler();
+  typeSelectChangeHandler();
 });
 
 const timeinElement = document.querySelector('#timein');

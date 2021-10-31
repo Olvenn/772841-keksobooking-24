@@ -1,5 +1,6 @@
 import './form-validation.js';
-import {addClass, removeClass} from './util.js';
+import {addClass, removeClass, openMessage, showAlert} from './util.js';
+import {sendData} from './api.js';
 
 const formAdvertisementElement = document.querySelector('.ad-form');
 const filterAdvertisementElement = document.querySelector('.map__filters');
@@ -23,4 +24,28 @@ const makeFormsActive = () => {
   });
 };
 
-export {makeFormsDisabled, makeFormsActive};
+const resetBtn = document.querySelector('.ad-form__reset');
+
+const clearAdvertisementForm = () => {
+  document.querySelector('.ad-form').reset();
+  document.querySelector('#price').setAttribute('placeholder', '1000');
+};
+
+resetBtn.addEventListener('click', clearAdvertisementForm);
+
+const setUserFormSubmit = (onSuccess, onErrors) => {
+  formAdvertisementElement.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+
+    sendData(
+      () => onSuccess(),
+      () => onErrors(),
+      new FormData(evt.target),
+    );
+  });
+};
+
+setUserFormSubmit(openMessage, showAlert);
+
+export {makeFormsDisabled, makeFormsActive, setUserFormSubmit};
+

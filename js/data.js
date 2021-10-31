@@ -14,13 +14,13 @@ const createOffer = () => {
 
   return {
     author: {
-      avatar: `img/avatars/user${addZeroToBegin(generatePhotoAvatarId())}.png`,
+      // avatar: `img/avatars/user${addZeroToBegin(generatePhotoAvatarId())}.png`,
     },
     offer: {
       title: 'Заголовок предложения',
       address: `${spotLocation.lat}, ${spotLocation.lng}`,
       price: Math.floor(getRandomPositiveInteger(MIN_PRICE, MAX_PRICE)),
-      accommodationType: TYPE_ACCOMMODATIONS[Math.round(getRandomPositiveInteger(0, TYPE_ACCOMMODATIONS.length - 1))],
+      type: TYPE_ACCOMMODATIONS[Math.round(getRandomPositiveInteger(0, TYPE_ACCOMMODATIONS.length - 1))],
       rooms: Math.floor(getRandomPositiveInteger(MIN_ROOM, MAX_ROOM)),
       guests: Math.floor(getRandomPositiveInteger(MIN_GUEST, MAX_GUEST)),
       checkin: CHECK_TIMES[Math.floor(getRandomPositiveInteger(0, CHECK_TIMES.length - 1))],
@@ -29,7 +29,7 @@ const createOffer = () => {
       description: 'Апартаменты-студио Inn Nishi Shinjuku с видом на город и бесплатным Wi-Fi расположены в Токио, в 400 м от храма Шогонджи и в 500 м от информационно-технологического центра.',
       photos: getNonrepeatingArrayFromArrayRandomLength(PHOTOS),
     },
-    spotLocation: {
+    location: {
       lat: +spotLocation.lat,
       lng: +spotLocation.lng,
     },

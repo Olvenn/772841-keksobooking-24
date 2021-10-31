@@ -1,3 +1,4 @@
+import {COORDINATES, ZOOM} from './constant.js';
 const getRandomPositiveInteger =  (min, max) => {
   const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
   const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
@@ -46,6 +47,7 @@ const createUniqueIdGenerator  = () => {
   };
 };
 
+
 const addZeroToBegin = (singleDigits) => {
   const avatar = String(singleDigits).padStart(2,'0');
   return avatar;
@@ -77,6 +79,75 @@ const removeClass = (eltment, nameOfClass) => {
   eltment.classList.remove(nameOfClass);
 };
 
+const isEscapeKey = (evt) => evt.key === 'Escape';
+
+const onSuccessEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeUserModal();
+  }
+};
+const onSuccessClick = () => {
+  closeUserModal();
+};
+
+
+const formClear = () => {
+  const formElement = document.querySelector('.ad-form');
+  formElement.reset();
+  document.querySelector('#address').value = `lat: ${COORDINATES.Latitude} lng: ${COORDINATES.Longitude}`;
+  document.querySelector('#price').setAttribute('placeholder', '1000');
+};
+
+function closeUserModal () {
+  const messageOpenElement = document.querySelector('.success');
+  messageOpenElement.remove();
+  formClear();
+
+  document.removeEventListener('keydown', onSuccessEscKeydown);
+  document.removeEventListener('click', onSuccessClick);
+}
+
+const openMessage = () => {
+  const bodyElement = document.querySelector('body');
+
+  const messageTemplate = document.querySelector('#success').content.querySelector('.success');
+  const messageElement = messageTemplate.cloneNode(true);
+
+  bodyElement.insertAdjacentElement('beforeend', messageElement);
+  document.addEventListener('keydown', onSuccessEscKeydown);
+  document.addEventListener('click', onSuccessClick);
+};
+
+const onErrorEscKeydown = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeErrorModal();
+  }
+};
+const onErrorClick = () => {
+  closeErrorModal();
+};
+
+function closeErrorModal () {
+  const messageOpenElement = document.querySelector('.error');
+  messageOpenElement.remove();
+
+  document.removeEventListener('keydown', onErrorEscKeydown);
+  document.removeEventListener('click', onErrorClick);
+}
+
+const showAlert = () => {
+  const bodyElement = document.querySelector('body');
+  const messageTemplate = document.querySelector('#error').content.querySelector('.error');
+  const messageElement = messageTemplate.cloneNode(true);
+
+
+  bodyElement.insertAdjacentElement('beforeend', messageElement);
+  document.addEventListener('keydown', onErrorEscKeydown);
+  document.addEventListener('click', onErrorClick);
+};
+
 export {getRandomPositiveInteger, getRandomPositiveFloat, createRandomIdFromRangeGenerator, getNonrepeatingArrayFromArrayRandomLength, createUniqueIdGenerator, addZeroToBegin};
 
-export {checkEnding, selectNecessaryElements, addClass, removeClass};
+export {checkEnding, openMessage, showAlert, selectNecessaryElements, addClass, removeClass};

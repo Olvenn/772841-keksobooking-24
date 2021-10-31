@@ -2,7 +2,7 @@ import {checkEnding, selectNecessaryElements} from './util.js';
 import {ACCOMMODATIONTYPES} from './constant.js';
 
 const mapCanvasElement = document.querySelector('#map-canvas');
-mapCanvasElement.style.display = 'flex';//временно
+mapCanvasElement.style.display = 'flex';
 
 const cardTemplateElement = document.querySelector('#card').content.querySelector('.popup');
 
@@ -13,7 +13,7 @@ const renderCard = (advertisement) => {
   cardElement.querySelector('.popup__text--address').textContent = advertisement.offer.address;
   cardElement.querySelector('.popup__description').textContent = advertisement.offer.description;
   cardElement.querySelector('.popup__avatar').src = advertisement.author.avatar;
-  cardElement.querySelector('.popup__type').textContent = ACCOMMODATIONTYPES[(advertisement.offer.accommodationType).toUpperCase()];
+  cardElement.querySelector('.popup__type').textContent = ACCOMMODATIONTYPES[(advertisement.offer.type).toUpperCase()];
   const roomsQuantity = `${advertisement.offer.rooms} ${checkEnding(advertisement.offer.rooms, ['комната', 'комнаты', 'комнат'])}`;
   const guestsuantity = `${advertisement.offer.guests} ${checkEnding(advertisement.offer.guests, ['гостя', 'гостей', 'гостей'])}`;
   cardElement.querySelector('.popup__text--capacity').textContent = advertisement.offer.rooms !== 100 ? `${roomsQuantity} для ${guestsuantity}` : 'не для гостей';
@@ -22,18 +22,26 @@ const renderCard = (advertisement) => {
 
   const featuresListAllElement = cardElement.querySelectorAll('.popup__feature');
   const advertisementFeatures = advertisement.offer.features;
-  selectNecessaryElements(featuresListAllElement, advertisementFeatures, 'popup__feature--');
+  if (advertisementFeatures) {
+    selectNecessaryElements(featuresListAllElement, advertisementFeatures, 'popup__feature--');
+  } else {
+    featuresListAllElement.textContent = '';
+  }
 
   const onePhotoElement = cardElement.querySelector('.popup__photo');
   const photosList = advertisement.offer.photos;
-  const photoBlockElement = document.createDocumentFragment();
+  if (photosList) {
+    const photoBlockElement = document.createDocumentFragment();
 
-  for (const photo of photosList) {
-    onePhotoElement.src = photo;
-    photoBlockElement.append(onePhotoElement.cloneNode(true));
+    for (const photo of photosList) {
+      onePhotoElement.src = photo;
+      photoBlockElement.append(onePhotoElement.cloneNode(true));
+    }
+    cardElement.querySelector('.popup__photos').append(photoBlockElement);
+  } else {
+    onePhotoElement.textContent = '';
   }
 
-  cardElement.querySelector('.popup__photos').append(photoBlockElement);
   cardElement.querySelector('.popup__text--price').textContent = '';
   cardElement.querySelector('.popup__text--price').insertAdjacentHTML('beforebegin', `${advertisement.offer.price} <span>₽/ночь</span>`);
 

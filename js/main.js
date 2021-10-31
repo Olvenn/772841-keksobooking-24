@@ -1,14 +1,10 @@
-import {createOffersArray} from './data.js';
 import {renderCardsList} from './card.js';
-import {makeFormsDisabled, makeFormsActive} from './form.js';
+import './map.js';
+import './filter.js';
+import {getData, sendData} from './api.js';
+import './form.js';
 
-const mapLoad = false;//временно
 
-makeFormsDisabled();
-if (document.readyState === 'DOMContentLoaded' || !mapLoad) {
-  makeFormsActive();
-}
-
-const allAdvertisements = createOffersArray();
-renderCardsList(allAdvertisements);
-
+getData((offers) => {
+  renderCardsList(offers.slice(0, 10));
+});
