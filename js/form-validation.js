@@ -81,6 +81,7 @@ const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptions
     } else {
       if(!valueSelected) {
         relationOption.selected = true;
+
       }
     }
   }

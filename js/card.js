@@ -1,9 +1,6 @@
 import {checkEnding, selectNecessaryElements} from './util.js';
 import {ACCOMMODATIONTYPES} from './constant.js';
 
-const mapCanvasElement = document.querySelector('#map-canvas');
-mapCanvasElement.style.display = 'flex';
-
 const cardTemplateElement = document.querySelector('#card').content.querySelector('.popup');
 
 const renderCard = (advertisement) => {
@@ -30,6 +27,7 @@ const renderCard = (advertisement) => {
 
   const onePhotoElement = cardElement.querySelector('.popup__photo');
   const photosList = advertisement.offer.photos;
+
   if (photosList) {
     const photoBlockElement = document.createDocumentFragment();
 
@@ -39,7 +37,7 @@ const renderCard = (advertisement) => {
     }
     cardElement.querySelector('.popup__photos').append(photoBlockElement);
   } else {
-    onePhotoElement.textContent = '';
+    cardElement.querySelector('.popup__photos').textContent = '';
   }
 
   cardElement.querySelector('.popup__text--price').textContent = '';
@@ -48,15 +46,4 @@ const renderCard = (advertisement) => {
   return cardElement;
 };
 
-const renderCardsList = (advertisementsArray) => {
-
-  const advertisementListFragmentElement = document.createDocumentFragment();
-
-  advertisementsArray.forEach((advertisement)  => {
-    advertisementListFragmentElement.appendChild(renderCard(advertisement));
-  });
-
-  mapCanvasElement.appendChild(advertisementListFragmentElement);
-};
-
-export {renderCardsList, renderCard};
+export {renderCard};

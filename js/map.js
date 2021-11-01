@@ -3,6 +3,7 @@ import {renderCard} from './card.js';
 import {makeFormsActive, makeFormsDisabled} from './form.js';
 import {getData} from './api.js';
 import {createOffersFiltered} from './filter.js';
+import {showAlertNotGetData} from './util.js';
 
 makeFormsDisabled();
 
@@ -104,6 +105,11 @@ const rendering = (dataOffers) => {
   });
 };
 
-getData((offers) => {
-  rendering(offers);
-});
+const setUserFormGet = (onSuccess, onErrors) => {
+  getData(
+    (offers) => onSuccess(offers),
+    (mes) => onErrors(mes),
+  );
+};
+
+setUserFormGet(rendering, showAlertNotGetData);

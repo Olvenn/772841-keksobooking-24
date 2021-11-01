@@ -1,20 +1,16 @@
-import {createOffersArray} from './data.js';
-
-
-const mapFilters = document.querySelectorAll('.map__filter');
+const mapFiltersElement = document.querySelectorAll('.map__filter');
 
 const getSelectionParameters = () => {
   const filterParameters = [];
-  [...mapFilters].forEach((el) => {
+  [...mapFiltersElement].forEach((el) => {
     filterParameters.push(el.value);
   });
   return filterParameters;
 };
 
 function getCheckedCheckBoxes() {
-
-  const selectedCheckBoxes = document.querySelectorAll('.map__filters input[type=checkbox]:checked');
-  const checkedValues = Array.from(selectedCheckBoxes).map((cb) => cb.value);
+  const selectedCheckBoxesElement = document.querySelectorAll('.map__filters input[type=checkbox]:checked');
+  const checkedValues = Array.from(selectedCheckBoxesElement).map((cb) => cb.value);
   return checkedValues;
 }
 

@@ -1,8 +1,16 @@
-const getData = (onSuccess) => {
+const getData = (onSuccess, showAlertNotGet) => {
   fetch('https://24.javascript.pages.academy/keksobooking/data')
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        showAlertNotGet('Не получить данные. Попробуйте перезагрузить страницу');
+      }
+      return response.json();
+    })
     .then((advertisements) => {
       onSuccess(advertisements);
+    })
+    .catch(() => {
+      showAlertNotGet('Не получить данные. Попробуйте перезагрузить страницу');
     });
 };
 
@@ -25,6 +33,5 @@ const sendData = (onSuccess, showAlert, body) => {
       showAlert('Не удалось отправить форму. Попробуйте ещё раз');
     });
 };
-
 
 export {getData, sendData};
