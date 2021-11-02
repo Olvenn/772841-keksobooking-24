@@ -67,23 +67,24 @@ const advertisementSelectGuestsElement = document.querySelector('#capacity');
 const advertisementOptionGuestsElements = document.querySelector('#capacity').options;
 
 const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptionsElement, changeElement) => {
-  for (const guestsNumber of relationOptionsElement) {
-    guestsNumber.setAttribute('disabled', true);
-  }
+
   const selectedElementValue = selectedElement.value;
   const roomValues = relationArray[selectedElementValue];
   const valueSelected = roomValues.includes((changeElement.value));
 
   for (const relationOption of relationOptionsElement) {
-    relationOption.removeAttribute('disabled');
     if(!roomValues.includes((relationOption.value))) {
       relationOption.setAttribute('disabled', true);
     } else {
-      if(!valueSelected) {
-        relationOption.selected = true;
-
-      }
+      relationOption.removeAttribute('disabled');
     }
+  }
+  if(!valueSelected) {
+    for (const roomOptions of relationOptionsElement) {
+      roomOptions.removeAttribute('selected');
+    }
+    const selectCorrelationItem = ROOM_GUESTS[selectedElementValue][0];
+    document.querySelector(`#capacity option[value="${selectCorrelationItem}"]`).setAttribute('selected', true);
   }
 };
 

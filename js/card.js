@@ -1,6 +1,9 @@
 import {checkEnding, selectNecessaryElements} from './util.js';
 import {ACCOMMODATIONTYPES} from './constant.js';
 
+// const mapCanvasElement = document.querySelector('#map-canvas');
+// mapCanvasElement.style.display = 'flex';
+
 const cardTemplateElement = document.querySelector('#card').content.querySelector('.popup');
 
 const renderCard = (advertisement) => {

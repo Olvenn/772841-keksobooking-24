@@ -1,9 +1,8 @@
-import {COORDINATES, ZOOM} from './constant.js';
+import {COORDINATES, ZOOM, OFFERSHOWSLENGTH} from './constant.js';
 import {renderCard} from './card.js';
 import {makeFormsActive, makeFormsDisabled} from './form.js';
 import {getData} from './api.js';
 import {createOffersFiltered} from './filter.js';
-import {showAlertNotGetData} from './util.js';
 
 makeFormsDisabled();
 
@@ -53,8 +52,6 @@ mainPinMarker.on('moveend', (evt) => {
   putCoordinatesInForm(evt);
 });
 
-const nextButton = document.querySelector('.btn');
-
 const createMarker = (advertisement, markerGroup) => {
   const {lat, lng} =  advertisement.location;
 
@@ -80,36 +77,39 @@ const createMarker = (advertisement, markerGroup) => {
 const rendering = (dataOffers) => {
   const mapFiltersForm = document.querySelector('.map__filters');
   const markerGroup = L.layerGroup().addTo(map);
-  let advertisementsLength = 10;
-  dataOffers.slice(0, 10).forEach((advertisement) => {
-    createMarker(advertisement, markerGroup);
-  });
 
-  mapFiltersForm.addEventListener('change', () => {
-    markerGroup.clearLayers();
-    const filteredOffers = createOffersFiltered(dataOffers);
-    filteredOffers.forEach((advertisement) => {
+  const createCard = (offers) => {
+    offers.slice(0, OFFERSHOWSLENGTH).forEach((advertisement) => {
       createMarker(advertisement, markerGroup);
     });
-    return createOffersFiltered(dataOffers);
+  };
 
-  });
+  createCard(dataOffers);
 
-  nextButton.addEventListener('click', () => {
-    markerGroup.clearLayers();
+  const renderFilteredData = (dataOfferss) =>  {
+    const filteredOffers = createOffersFiltered(dataOfferss);
+    createCard(filteredOffers);
+  };
 
-    dataOffers.slice(advertisementsLength, advertisementsLength + 10).forEach((advertisement) => {
-      createMarker(advertisement, markerGroup);
+  const change = (cb) => {
+    mapFiltersForm.addEventListener('change', () => {
+      markerGroup.clearLayers();
+      cb();
     });
-    advertisementsLength += 10;
-  });
+  };
+
+  change(_.debounce(
+    () => renderFilteredData(dataOffers),
+    500,
+  ));
+
 };
 
 const setUserFormGet = (onSuccess, onErrors) => {
   getData(
     (offers) => onSuccess(offers),
-    (mes) => onErrors(mes),
+    (message) => onErrors(message),
   );
 };
 
-setUserFormGet(rendering, showAlertNotGetData);
+export {setUserFormGet, rendering};

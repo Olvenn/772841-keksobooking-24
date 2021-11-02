@@ -1,3 +1,4 @@
+import {PRICE_FILTER} from './constant.js';
 const mapFiltersElement = document.querySelectorAll('.map__filter');
 
 const getSelectionParameters = () => {
@@ -22,9 +23,7 @@ const compareTwoArrays = (array1 = [], array2) =>{
     const allArray = array1Sorted.concat(array2Sorted);
     const uniqueArray = Array.from(new Set(allArray));
 
-    if (uniqueArray.length === array1Sorted.length) {
-      return true;
-    }
+    return uniqueArray.length === array1Sorted.length;
   }
 };
 
@@ -36,11 +35,11 @@ const createOffersFiltered = (arrayNotFiltered) => {
   const filteredData = arrayNotFiltered.filter((element) => {
 
     let price = 'any';
-    if (+element.offer.price < 10000) {
+    if (+element.offer.price < PRICE_FILTER.Min) {
       price = 'low';
-    } else if (+element.offer.price >= 10000 && +element.offer.price <= 50000) {
+    } else if (+element.offer.price >= PRICE_FILTER.Min && +element.offer.price <= PRICE_FILTER.Max) {
       price = 'middle';
-    } else if (+element.offer.price > 50000) {
+    } else if (+element.offer.price > PRICE_FILTER.Max) {
       price = 'high';
     }
 

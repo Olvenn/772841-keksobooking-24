@@ -17,6 +17,13 @@ const TYPE_ACCOMMODATIONS = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
 
 const FEATURES =  ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
 
+const Url = {
+  GET: 'https://24.javascript.pages.academy/keksobooking/data',
+  POST: 'https://24.javascript.pages.academy/keksobooking',
+};
+
+const OFFERSHOWSLENGTH = 15;
+
 const NAME_LENGTH = {
   Min: 30,
   Max: 100,
@@ -27,11 +34,16 @@ const PRICE_VALUE = {
   Max: 1000000,
 };
 
+const PRICE_FILTER = {
+  Min: 10000,
+  Max: 50000,
+};
+
 const ROOM_GUESTS = {
   '1': ['1'],
   '100': ['0'],
-  '2': ['1', '2'],
-  '3': ['1', '2', '3'],
+  '2': ['2', '1'],
+  '3': ['3', '2', '1'],
 };
 
 const TYPE_PRICE = {
@@ -42,4 +54,4 @@ const TYPE_PRICE = {
   palace: 10000,
 };
 
-export {ACCOMMODATIONTYPES, ZOOM, COORDINATES, TYPE_ACCOMMODATIONS, FEATURES, NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE};
+export {ACCOMMODATIONTYPES, ZOOM, COORDINATES, TYPE_ACCOMMODATIONS, FEATURES, NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE, Url, PRICE_FILTER, OFFERSHOWSLENGTH};
