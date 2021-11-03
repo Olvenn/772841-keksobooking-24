@@ -1,55 +1,4 @@
-const getRandomPositiveInteger =  (min, max) => {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-};
-
-const getRandomPositiveFloat = (a, b, digits = 1) => {
-  const lower = Math.min(Math.abs(a), Math.abs(b));
-  const upper = Math.max(Math.abs(a), Math.abs(b));
-  const result = Math.random() * (upper - lower) + lower;
-  return result.toFixed(digits);
-};
-
-const createRandomIdFromRangeGenerator = (min, max) => {
-  const previousValues = [];
-
-  return function () {
-    let currentValue = getRandomPositiveInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
-      return null;
-    }
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomPositiveInteger(min, max);
-    }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
-};
-
-const getNonrepeatingArrayFromArrayRandomLength = (incomeArray) => {
-  const outcomeArray = [];
-  const generatePhotoId = createRandomIdFromRangeGenerator(0, incomeArray.length - 1);
-  for (let i = 0; i <= getRandomPositiveInteger(1, incomeArray.length - 1); i++) {
-    outcomeArray.push(incomeArray[generatePhotoId()]);
-  }
-  return outcomeArray;
-};
-
-const createUniqueIdGenerator  = () => {
-  let lastGeneratedId = 0;
-  return function () {
-    lastGeneratedId += 1;
-    return lastGeneratedId;
-  };
-};
-
-const addZeroToBegin = (singleDigits) => {
-  const avatar = String(singleDigits).padStart(2,'0');
-  return avatar;
-};
+import {COORDINATES} from './constant.js';
 
 const checkEnding = (number, words) => {
   number = Math.abs(number) % 100;
@@ -77,6 +26,82 @@ const removeClass = (eltment, nameOfClass) => {
   eltment.classList.remove(nameOfClass);
 };
 
-export {getRandomPositiveInteger, getRandomPositiveFloat, createRandomIdFromRangeGenerator, getNonrepeatingArrayFromArrayRandomLength, createUniqueIdGenerator, addZeroToBegin};
+const isEscapeKey = (evt) => evt.key === 'Escape';
 
-export {checkEnding, selectNecessaryElements, addClass, removeClass};
+const formClear = () => {
+  const formElement = document.querySelector('.ad-form');
+  formElement.reset();
+  document.querySelector('#address').value = `lat: ${COORDINATES.Latitude} lng: ${COORDINATES.Longitude}`;
+  document.querySelector('#price').setAttribute('placeholder', '1000');
+};
+
+const escSuccessKeydownHandler = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeUserModal();
+  }
+};
+
+const documentSuccessClickHandler = () => {
+  closeUserModal();
+};
+
+function closeUserModal () {
+  const messageOpenElement = document.querySelector('.success');
+  messageOpenElement.remove();
+  formClear();
+
+  document.removeEventListener('keydown', escSuccessKeydownHandler);
+  document.removeEventListener('click', documentSuccessClickHandler);
+}
+
+const openSuccessMessage = () => {
+  const bodyElement = document.querySelector('body');
+
+  const messageTemplate = document.querySelector('#success').content.querySelector('.success');
+  const messageElement = messageTemplate.cloneNode(true);
+
+  bodyElement.insertAdjacentElement('beforeend', messageElement);
+  document.addEventListener('keydown', escSuccessKeydownHandler);
+  document.addEventListener('click', documentSuccessClickHandler);
+};
+
+const escErrorKeydownHandler = (evt) => {
+  if (isEscapeKey(evt)) {
+    evt.preventDefault();
+    closeErrorModal();
+  }
+};
+const documentErrorClickHandler = () => {
+  closeErrorModal();
+};
+
+function closeErrorModal () {
+  const messageOpenElement = document.querySelector('.error');
+  messageOpenElement.remove();
+
+  document.removeEventListener('keydown', escErrorKeydownHandler);
+  document.removeEventListener('click', documentErrorClickHandler);
+}
+
+const showAlert = () => {
+  const bodyElement = document.querySelector('body');
+  const messageTemplate = document.querySelector('#error').content.querySelector('.error');
+  const messageElement = messageTemplate.cloneNode(true);
+
+
+  bodyElement.insertAdjacentElement('beforeend', messageElement);
+  document.addEventListener('keydown', escErrorKeydownHandler);
+  document.addEventListener('click', documentErrorClickHandler);
+};
+
+const showAlertNotGetData = (message) => {
+  const mapElement = document.querySelector('.map__message');
+  mapElement.style.display = 'block';
+  mapElement.textContent = message;
+  setTimeout(() => {
+    mapElement.style.display = 'none';
+  }, 3000);
+};
+
+export {checkEnding, openSuccessMessage, showAlert, selectNecessaryElements, addClass, removeClass, showAlertNotGetData};

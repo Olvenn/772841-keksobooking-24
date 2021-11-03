@@ -1,11 +1,14 @@
-import {COORDINATES, ZOOM} from './constant.js';
+import {COORDINATES, ZOOM, OFFERSHOWSLENGTH} from './constant.js';
 import {renderCard} from './card.js';
-import {createOffersArray} from './data.js';
-import {putCoordinatesInForm} from './util.js';
 import {makeFormsActive, makeFormsDisabled} from './form.js';
+import {getData} from './api.js';
+import {createOffersFiltered} from './filter.js';
 
 makeFormsDisabled();
-const allAdvertisements = createOffersArray();
+
+const putCoordinatesInForm = (evt) => {
+  document.querySelector('#address').value = `lat: ${evt.target.getLatLng()['lat'].toFixed(5)} lng: ${evt.target.getLatLng()['lng'].toFixed(5)}`;
+};
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -24,12 +27,12 @@ L.tileLayer(
   },
 ).addTo(map);
 
-const createAdvertisemenPopup = (point) => renderCard(point);
+const createAdvertisemenPopup = (point) =>  renderCard(point);
 
 const mainPinIcon = L.icon({
-  iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/main-pin.svg',
-  iconSize: [52, 52],
-  iconAnchor: [26, 52],
+  iconUrl: 'leaflet/images/marker-icon.png',
+  iconSize: [25, 52],
+  iconAnchor: [12, 52],
 });
 
 const mainPinMarker = L.marker(
@@ -49,15 +52,13 @@ mainPinMarker.on('moveend', (evt) => {
   putCoordinatesInForm(evt);
 });
 
-const markerGroup = L.layerGroup().addTo(map);
-
-const createMarker = (advertisement) => {
-  const {lat, lng} =  advertisement.spotLocation;
+const createMarker = (advertisement, markerGroup) => {
+  const {lat, lng} =  advertisement.location;
 
   const icon = L.icon({
-    iconUrl: 'https://assets.htmlacademy.ru/content/intensive/javascript-1/demo/interactive-map/pin.svg',
-    iconSize: [40, 40],
-    iconAnchor: [20, 40],
+    iconUrl: 'leaflet/images/marker-icon.png',
+    iconSize: [25, 40],
+    iconAnchor: [12, 40],
   });
 
   const marker = L.marker(
@@ -73,20 +74,42 @@ const createMarker = (advertisement) => {
   marker.addTo(markerGroup).bindPopup(createAdvertisemenPopup(advertisement));
 };
 
-const nextButton = document.querySelector('#housing-type');
+const rendering = (dataOffers) => {
+  const mapFiltersForm = document.querySelector('.map__filters');
+  const markerGroup = L.layerGroup().addTo(map);
 
-allAdvertisements.slice(0, 2).forEach((advertisement) => {
-  createMarker(advertisement);
-});
+  const createCard = (offers) => {
+    offers.slice(0, OFFERSHOWSLENGTH).forEach((advertisement) => {
+      createMarker(advertisement, markerGroup);
+    });
+  };
 
-let advertisementsLength = 2;
+  createCard(dataOffers);
 
-nextButton.addEventListener('change', () => {
-  markerGroup.clearLayers();
+  const renderFilteredData = (dataOfferss) =>  {
+    const filteredOffers = createOffersFiltered(dataOfferss);
+    createCard(filteredOffers);
+  };
 
-  allAdvertisements.slice(advertisementsLength, advertisementsLength + 2).forEach((advertisement) => {
-    createMarker(advertisement);
-  });
-  advertisementsLength += 2;
-  nextButton.remove();
-});
+  const change = (cb) => {
+    mapFiltersForm.addEventListener('change', () => {
+      markerGroup.clearLayers();
+      cb();
+    });
+  };
+
+  change(_.debounce(
+    () => renderFilteredData(dataOffers),
+    500,
+  ));
+
+};
+
+const setUserFormGet = (onSuccess, onErrors) => {
+  getData(
+    (offers) => onSuccess(offers),
+    (message) => onErrors(message),
+  );
+};
+
+export {setUserFormGet, rendering};

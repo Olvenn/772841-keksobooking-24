@@ -1,14 +1,7 @@
-import {createOffersArray} from './data.js';
-import {renderCardsList} from './card.js';
-import {makeFormsDisabled, makeFormsActive} from './form.js';
+import './map.js';
+import './form-validation.js';
+import './form.js';
+import {showAlertNotGetData} from './util.js';
+import {setUserFormGet, rendering} from './map.js';
 
-const mapLoad = false;//временно
-
-makeFormsDisabled();
-if (document.readyState === 'DOMContentLoaded' || !mapLoad) {
-  makeFormsActive();
-}
-
-const allAdvertisements = createOffersArray();
-renderCardsList(allAdvertisements);
-
+setUserFormGet(rendering, showAlertNotGetData);
