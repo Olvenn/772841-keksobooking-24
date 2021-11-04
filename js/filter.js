@@ -27,6 +27,12 @@ const compareTwoArrays = (array1 = [], array2) =>{
   }
 };
 
+const compareOffers = (offerA, offerB) => {
+  const offerLengthA = offerA.offer.features ? offerA.offer.features.length : 0;
+  const offerLengthB = offerB.offer.features ? offerB.offer.features.length : 0;
+  return offerLengthA - offerLengthB;
+};
+
 const createOffersFiltered = (arrayNotFiltered) => {
 
   const valueParameters = getSelectionParameters();
@@ -50,7 +56,7 @@ const createOffersFiltered = (arrayNotFiltered) => {
     && (compareTwoArrays(element.offer.features, checkedParameters) || checkedParameters.length === 0);
   });
 
-  return filteredData;
+  return filteredData.slice().sort(compareOffers);
 };
 
 export {createOffersFiltered};

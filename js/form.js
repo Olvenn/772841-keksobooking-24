@@ -1,7 +1,6 @@
 import './form-validation.js';
 import {addClass, removeClass, openSuccessMessage, showAlert} from './util.js';
 import {sendData} from './api.js';
-import {COORDINATES} from './constant.js';
 
 const formAdvertisementElement = document.querySelector('.ad-form');
 const filterAdvertisementElement = document.querySelector('.map__filters');
@@ -33,18 +32,15 @@ const makeFormsActive = () => {
   });
 };
 
-const resetBtnElement = document.querySelector('.ad-form__reset');
-
-const clearAdvertisementForm = () => {
-  document.querySelector('.ad-form').reset();
-  document.querySelector('.map__filters').reset();
-  document.querySelector('#address').value = `lat: ${COORDINATES.Latitude} lng: ${COORDINATES.Longitude}`;
-  document.querySelector('#price').setAttribute('placeholder', '1000');
+const formInvalid = () => {
+  const checkForm = document.querySelector('.ad-form');
+  checkForm.addEventListener('invalid', (evt) => {
+    evt.target.classList.add ('shadow');
+  }, true);
 };
 
-resetBtnElement.addEventListener('click', clearAdvertisementForm);
-
 const setUserFormSubmit = (onSuccess, onErrors) => {
+  formInvalid();
   formAdvertisementElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 

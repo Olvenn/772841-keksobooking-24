@@ -41,9 +41,9 @@ const PRICE_FILTER = {
 
 const ROOM_GUESTS = {
   '1': ['1'],
-  '100': ['0'],
   '2': ['2', '1'],
   '3': ['3', '2', '1'],
+  '100': ['0'],
 };
 
 const TYPE_PRICE = {
