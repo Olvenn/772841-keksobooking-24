@@ -4,7 +4,6 @@ const getData = (onSuccess, showAlertNotGet) => {
     .then((response) => {
       if (!response.ok) {
         showAlertNotGet('Не получить данные. Попробуйте перезагрузить страницу');
-        // throw new Error('Error occurred!');
       }
       return response.json();
     })

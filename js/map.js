@@ -3,6 +3,7 @@ import {renderCard} from './card.js';
 import {makeFormsActive, makeFormsDisabled} from './form.js';
 import {getData} from './api.js';
 import {createOffersFiltered} from './filter.js';
+import {formClear} from './util.js';
 
 makeFormsDisabled();
 
@@ -30,9 +31,9 @@ L.tileLayer(
 const createAdvertisemenPopup = (point) =>  renderCard(point);
 
 const mainPinIcon = L.icon({
-  iconUrl: 'leaflet/images/marker-icon.png',
-  iconSize: [25, 52],
-  iconAnchor: [12, 52],
+  iconUrl: 'img/main-pin.svg',
+  iconSize: [52, 52],
+  iconAnchor: [26, 52],
 });
 
 const mainPinMarker = L.marker(
@@ -56,9 +57,9 @@ const createMarker = (advertisement, markerGroup) => {
   const {lat, lng} =  advertisement.location;
 
   const icon = L.icon({
-    iconUrl: 'leaflet/images/marker-icon.png',
-    iconSize: [25, 40],
-    iconAnchor: [12, 40],
+    iconUrl: 'img/pin.svg',
+    iconSize: [40, 40],
+    iconAnchor: [20, 40],
   });
 
   const marker = L.marker(
@@ -74,6 +75,20 @@ const createMarker = (advertisement, markerGroup) => {
   marker.addTo(markerGroup).bindPopup(createAdvertisemenPopup(advertisement));
 };
 
+const resetMap = () => {
+  mainPinMarker.setLatLng({
+    lat: COORDINATES.Latitude,
+    lng: COORDINATES.Longitude,
+  });
+
+  map.setView({
+    lat: COORDINATES.Latitude,
+    lng: COORDINATES.Longitude,
+
+  }, ZOOM);
+
+};
+
 const rendering = (dataOffers) => {
   const mapFiltersForm = document.querySelector('.map__filters');
   const markerGroup = L.layerGroup().addTo(map);
@@ -87,8 +102,11 @@ const rendering = (dataOffers) => {
   createCard(dataOffers);
 
   const renderFilteredData = (dataOfferss) =>  {
+    makeFormsDisabled();
     const filteredOffers = createOffersFiltered(dataOfferss);
     createCard(filteredOffers);
+    makeFormsActive();
+
   };
 
   const change = (cb) => {
@@ -103,13 +121,21 @@ const rendering = (dataOffers) => {
     500,
   ));
 
+  const resetBtnElement = document.querySelector('.ad-form__reset');
+
+  resetBtnElement.addEventListener('click', () => {
+    formClear();
+    resetMap();
+    createCard(dataOffers);
+  });
+
 };
 
-const setUserFormGet = (onSuccess, onErrors) => {
+const setOfferFormGet = (onSuccess, onErrors) => {
   getData(
     (offers) => onSuccess(offers),
     (message) => onErrors(message),
   );
 };
 
-export {setUserFormGet, rendering};
+export {setOfferFormGet, rendering, resetMap};

@@ -49,7 +49,11 @@ const documentSuccessClickHandler = () => {
 function closeUserModal () {
   const messageOpenElement = document.querySelector('.success');
   messageOpenElement.remove();
+
   formClear();
+
+  const formElement = document.querySelector('.ad-form');
+  [...formElement.querySelectorAll('.shadow')].forEach((element) => element.classList.remove('shadow'));
 
   document.removeEventListener('keydown', escSuccessKeydownHandler);
   document.removeEventListener('click', documentSuccessClickHandler);
@@ -104,4 +108,4 @@ const showAlertNotGetData = (message) => {
   }, 3000);
 };
 
-export {checkEnding, openSuccessMessage, showAlert, selectNecessaryElements, addClass, removeClass, showAlertNotGetData};
+export {checkEnding, openSuccessMessage, showAlert, selectNecessaryElements, addClass, removeClass, showAlertNotGetData, formClear};

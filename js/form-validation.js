@@ -63,14 +63,12 @@ advertisementInputAddressElement.addEventListener('focus', () => {
 });
 
 const advertisementSelectRoomElement = document.querySelector('#room_number');
-const advertisementSelectGuestsElement = document.querySelector('#capacity');
 const advertisementOptionGuestsElements = document.querySelector('#capacity').options;
 
-const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptionsElement, changeElement) => {
+const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptionsElement) => {
 
   const selectedElementValue = selectedElement.value;
   const roomValues = relationArray[selectedElementValue];
-  const valueSelected = roomValues.includes((changeElement.value));
 
   for (const relationOption of relationOptionsElement) {
     if(!roomValues.includes((relationOption.value))) {
@@ -79,17 +77,17 @@ const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptions
       relationOption.removeAttribute('disabled');
     }
   }
-  if(!valueSelected) {
-    for (const roomOptions of relationOptionsElement) {
-      roomOptions.removeAttribute('selected');
-    }
-    const selectCorrelationItem = ROOM_GUESTS[selectedElementValue][0];
-    document.querySelector(`#capacity option[value="${selectCorrelationItem}"]`).setAttribute('selected', true);
+
+  for (const roomOptions of relationOptionsElement) {
+    roomOptions.removeAttribute('selected');
   }
+  const selectCorrelationItem = ROOM_GUESTS[selectedElementValue][0];
+
+  document.querySelector(`#capacity option[value="${selectCorrelationItem}"]`).setAttribute('selected', 'selected');
 };
 
 advertisementSelectRoomElement.addEventListener('change', () => {
-  setRoomGuestCorrelation(advertisementSelectRoomElement, ROOM_GUESTS , advertisementOptionGuestsElements, advertisementSelectGuestsElement);
+  setRoomGuestCorrelation(advertisementSelectRoomElement, ROOM_GUESTS , advertisementOptionGuestsElements);
 });
 
 const typeSelectElement = document.querySelector('#type');
