@@ -18,6 +18,7 @@ const makeFormsDisabled = () => {
   dataFilter.forEach((oneElement) => {
     oneElement.setAttribute('disabled', true);
   });
+
 };
 
 const makeFormsActive = () => {
