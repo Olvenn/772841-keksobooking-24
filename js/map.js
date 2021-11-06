@@ -3,18 +3,18 @@ import {renderCard} from './card.js';
 import {makeFormsActive, makeFormsDisabled} from './form.js';
 import {getData} from './api.js';
 import {createOffersFiltered} from './filter.js';
-import {formClear} from './util.js';
+import {formClear, getCoordinates} from './util.js';
 
 makeFormsDisabled();
 
 const putCoordinatesInForm = (evt) => {
-  document.querySelector('#address').value = `lat: ${evt.target.getLatLng()['lat'].toFixed(5)} lng: ${evt.target.getLatLng()['lng'].toFixed(5)}`;
+  document.querySelector('#address').value = `${evt.target.getLatLng()['lat'].toFixed(5)} ${evt.target.getLatLng()['lng'].toFixed(5)}`;
 };
 
 const map = L.map('map-canvas')
   .on('load', () => {
+    getCoordinates();
     makeFormsActive();
-    document.querySelector('#address').value = `lat: ${COORDINATES.Latitude} lng: ${COORDINATES.Longitude}`;
   })
   .setView({
     lat: COORDINATES.Latitude,
@@ -123,7 +123,8 @@ const rendering = (dataOffers) => {
 
   const resetBtnElement = document.querySelector('.ad-form__reset');
 
-  resetBtnElement.addEventListener('click', () => {
+  resetBtnElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
     formClear();
     resetMap();
     createCard(dataOffers);

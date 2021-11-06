@@ -28,10 +28,14 @@ const removeClass = (eltment, nameOfClass) => {
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
+const getCoordinates = () => {
+  document.querySelector('#address').value = `${COORDINATES.Latitude} ${COORDINATES.Longitude}`;
+};
+
 const formClear = () => {
   const formElement = document.querySelector('.ad-form');
   formElement.reset();
-  document.querySelector('#address').value = `lat: ${COORDINATES.Latitude} lng: ${COORDINATES.Longitude}`;
+  getCoordinates();
   document.querySelector('#price').setAttribute('placeholder', '1000');
 };
 
@@ -108,4 +112,4 @@ const showAlertNotGetData = (message) => {
   }, 3000);
 };
 
-export {checkEnding, openSuccessMessage, showAlert, selectNecessaryElements, addClass, removeClass, showAlertNotGetData, formClear};
+export {checkEnding, openSuccessMessage, showAlert, selectNecessaryElements, addClass, removeClass, showAlertNotGetData, formClear, getCoordinates};
