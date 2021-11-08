@@ -9,11 +9,11 @@ const getSelectionParameters = () => {
   return filterParameters;
 };
 
-function getCheckedCheckBoxes() {
+const getCheckedCheckBoxes = () => {
   const selectedCheckBoxesElement = document.querySelectorAll('.map__filters input[type=checkbox]:checked');
   const checkedValues = Array.from(selectedCheckBoxesElement).map((cb) => cb.value);
   return checkedValues;
-}
+};
 
 const compareTwoArrays = (array1 = [], array2) =>{
   const array1Sorted = array1.sort();

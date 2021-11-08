@@ -13,9 +13,7 @@ const COORDINATES = {
 
 const ZOOM = 12;
 
-const TYPE_ACCOMMODATIONS = ['palace', 'flat', 'house', 'bungalow', 'hotel'];
-
-const FEATURES =  ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+const TIMEALERT = 3000;
 
 const Url = {
   GET: 'https://24.javascript.pages.academy/keksobooking/data',
@@ -54,4 +52,14 @@ const TYPE_PRICE = {
   palace: 10000,
 };
 
-export {ACCOMMODATIONTYPES, ZOOM, COORDINATES, TYPE_ACCOMMODATIONS, FEATURES, NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE, Url, PRICE_FILTER, OFFERSHOWSLENGTH};
+const TIMERENDERDELAY = 500;
+
+const FILE_TYPES = ['jpg', 'jpeg', 'png'];
+
+const bodyElement = document.querySelector('body');
+
+const formElement = document.querySelector('.ad-form');
+
+const mapFiltersFormElement = document.querySelector('.map__filters');
+
+export {ACCOMMODATIONTYPES, ZOOM, COORDINATES,  NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE, Url, PRICE_FILTER, OFFERSHOWSLENGTH, TIMEALERT, TIMERENDERDELAY, FILE_TYPES, bodyElement, formElement, mapFiltersFormElement};

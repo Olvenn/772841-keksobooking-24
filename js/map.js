@@ -1,19 +1,21 @@
-import {COORDINATES, ZOOM, OFFERSHOWSLENGTH} from './constant.js';
+import {COORDINATES, ZOOM, OFFERSHOWSLENGTH, TIMERENDERDELAY, mapFiltersFormElement} from './constant.js';
 import {renderCard} from './card.js';
 import {makeFormsActive, makeFormsDisabled} from './form.js';
 import {getData} from './api.js';
 import {createOffersFiltered} from './filter.js';
-import {formClear, getCoordinates} from './util.js';
+import {formClear, setDefaultCoordinates} from './util.js';
+
+const resetBtnElement = document.querySelector('.ad-form__reset');
 
 makeFormsDisabled();
 
 const putCoordinatesInForm = (evt) => {
-  document.querySelector('#address').value = `${evt.target.getLatLng()['lat'].toFixed(5)} ${evt.target.getLatLng()['lng'].toFixed(5)}`;
+  document.querySelector('#address').value = `${evt.target.getLatLng()['lat'].toFixed(5)}, ${evt.target.getLatLng()['lng'].toFixed(5)}`;
 };
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    getCoordinates();
+    setDefaultCoordinates();
     makeFormsActive();
   })
   .setView({
@@ -86,13 +88,10 @@ const resetMap = () => {
     lng: COORDINATES.Longitude,
 
   }, ZOOM);
-
 };
 
-const rendering = (dataOffers) => {
-  const mapFiltersForm = document.querySelector('.map__filters');
+const renderData = (dataOffers) => {
   const markerGroup = L.layerGroup().addTo(map);
-
   const createCard = (offers) => {
     offers.slice(0, OFFERSHOWSLENGTH).forEach((advertisement) => {
       createMarker(advertisement, markerGroup);
@@ -100,7 +99,6 @@ const rendering = (dataOffers) => {
   };
 
   createCard(dataOffers);
-
   const renderFilteredData = (dataOfferss) =>  {
     makeFormsDisabled();
     const filteredOffers = createOffersFiltered(dataOfferss);
@@ -110,7 +108,7 @@ const rendering = (dataOffers) => {
   };
 
   const change = (cb) => {
-    mapFiltersForm.addEventListener('change', () => {
+    mapFiltersFormElement.addEventListener('change', () => {
       markerGroup.clearLayers();
       cb();
     });
@@ -118,10 +116,8 @@ const rendering = (dataOffers) => {
 
   change(_.debounce(
     () => renderFilteredData(dataOffers),
-    500,
+    TIMERENDERDELAY,
   ));
-
-  const resetBtnElement = document.querySelector('.ad-form__reset');
 
   resetBtnElement.addEventListener('click', (evt) => {
     evt.preventDefault();
@@ -139,4 +135,4 @@ const setOfferFormGet = (onSuccess, onErrors) => {
   );
 };
 
-export {setOfferFormGet, rendering, resetMap};
+export {setOfferFormGet, renderData, resetMap};

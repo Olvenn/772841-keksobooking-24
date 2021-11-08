@@ -1,4 +1,5 @@
-import {COORDINATES} from './constant.js';
+import {COORDINATES, TIMEALERT, bodyElement, formElement} from './constant.js';
+const mapElement = document.querySelector('.map__message');
 
 const checkEnding = (number, words) => {
   number = Math.abs(number) % 100;
@@ -18,25 +19,25 @@ const selectNecessaryElements = ((allElements, necessaryElements, partOfClassNam
   });
 });
 
-const addClass = (eltment, nameOfClass) => {
-  eltment.classList.add(nameOfClass);
+const addClass = (element, nameOfClass) => {
+  element.classList.add(nameOfClass);
 };
 
-const removeClass = (eltment, nameOfClass) => {
-  eltment.classList.remove(nameOfClass);
+const removeClass = (element, nameOfClass) => {
+  element.classList.remove(nameOfClass);
 };
 
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const getCoordinates = () => {
-  document.querySelector('#address').value = `${COORDINATES.Latitude} ${COORDINATES.Longitude}`;
-};
+const setDefaultCoordinates = () => document.querySelector('#address').value = `${COORDINATES.Latitude}, ${COORDINATES.Longitude}`;
+
 
 const formClear = () => {
-  const formElement = document.querySelector('.ad-form');
   formElement.reset();
-  getCoordinates();
+  setDefaultCoordinates();
   document.querySelector('#price').setAttribute('placeholder', '1000');
+  [...formElement.querySelectorAll('.shadow')].forEach((element) => element.classList.remove('shadow'));
+
 };
 
 const escSuccessKeydownHandler = (evt) => {
@@ -51,27 +52,24 @@ const documentSuccessClickHandler = () => {
 };
 
 function closeUserModal () {
-  const messageOpenElement = document.querySelector('.success');
-  messageOpenElement.remove();
-
+  const messageSuccessOpenElement = document.querySelector('.success');
+  messageSuccessOpenElement.remove();
   formClear();
-
-  const formElement = document.querySelector('.ad-form');
-  [...formElement.querySelectorAll('.shadow')].forEach((element) => element.classList.remove('shadow'));
-
   document.removeEventListener('keydown', escSuccessKeydownHandler);
   document.removeEventListener('click', documentSuccessClickHandler);
 }
 
-const openSuccessMessage = () => {
-  const bodyElement = document.querySelector('body');
-
-  const messageTemplate = document.querySelector('#success').content.querySelector('.success');
+const openMessage = (className, keydownHandler, clickHandler) => {
+  const messageTemplate = document.querySelector(`#${className}`).content.querySelector(`.${className}`);
   const messageElement = messageTemplate.cloneNode(true);
 
   bodyElement.insertAdjacentElement('beforeend', messageElement);
-  document.addEventListener('keydown', escSuccessKeydownHandler);
-  document.addEventListener('click', documentSuccessClickHandler);
+  document.addEventListener('keydown', keydownHandler);
+  document.addEventListener('click', clickHandler);
+};
+
+const openSuccessMessage = () => {
+  openMessage('success', escSuccessKeydownHandler, documentSuccessClickHandler);
 };
 
 const escErrorKeydownHandler = (evt) => {
@@ -80,36 +78,29 @@ const escErrorKeydownHandler = (evt) => {
     closeErrorModal();
   }
 };
+
 const documentErrorClickHandler = () => {
   closeErrorModal();
 };
 
 function closeErrorModal () {
-  const messageOpenElement = document.querySelector('.error');
-  messageOpenElement.remove();
+  const messageErrorOpenElement = document.querySelector('.error');
+  messageErrorOpenElement.remove();
 
   document.removeEventListener('keydown', escErrorKeydownHandler);
   document.removeEventListener('click', documentErrorClickHandler);
 }
 
 const showAlert = () => {
-  const bodyElement = document.querySelector('body');
-  const messageTemplate = document.querySelector('#error').content.querySelector('.error');
-  const messageElement = messageTemplate.cloneNode(true);
-
-
-  bodyElement.insertAdjacentElement('beforeend', messageElement);
-  document.addEventListener('keydown', escErrorKeydownHandler);
-  document.addEventListener('click', documentErrorClickHandler);
+  openMessage('error', escErrorKeydownHandler, documentErrorClickHandler);
 };
 
 const showAlertNotGetData = (message) => {
-  const mapElement = document.querySelector('.map__message');
   mapElement.style.display = 'block';
   mapElement.textContent = message;
   setTimeout(() => {
     mapElement.style.display = 'none';
-  }, 3000);
+  }, TIMEALERT);
 };
 
-export {checkEnding, openSuccessMessage, showAlert, selectNecessaryElements, addClass, removeClass, showAlertNotGetData, formClear, getCoordinates};
+export {checkEnding, openSuccessMessage, showAlert, selectNecessaryElements, addClass, removeClass, showAlertNotGetData, formClear, setDefaultCoordinates};

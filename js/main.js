@@ -1,7 +1,9 @@
 import './map.js';
 import './form-validation.js';
 import './form.js';
+import './foto.js';
 import {showAlertNotGetData} from './util.js';
-import {setOfferFormGet, rendering} from './map.js';
+import {setOfferFormGet, renderData} from './map.js';
 
-setOfferFormGet(rendering, showAlertNotGetData);
+
+setOfferFormGet(renderData, showAlertNotGetData);
