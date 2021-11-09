@@ -12,8 +12,8 @@ const renderCard = (advertisement) => {
   cardElement.querySelector('.popup__avatar').src = advertisement.author.avatar;
   cardElement.querySelector('.popup__type').textContent = ACCOMMODATIONTYPES[(advertisement.offer.type).toUpperCase()];
   const roomsQuantity = `${advertisement.offer.rooms} ${checkEnding(advertisement.offer.rooms, ['комната', 'комнаты', 'комнат'])}`;
-  const guestsuantity = `${advertisement.offer.guests} ${checkEnding(advertisement.offer.guests, ['гостя', 'гостей', 'гостей'])}`;
-  cardElement.querySelector('.popup__text--capacity').textContent = advertisement.offer.rooms !== 100 ? `${roomsQuantity} для ${guestsuantity}` : 'не для гостей';
+  const guestQuantity = `${advertisement.offer.guests} ${checkEnding(advertisement.offer.guests, ['гостя', 'гостей', 'гостей'])}`;
+  cardElement.querySelector('.popup__text--capacity').textContent = advertisement.offer.rooms !== 100 ? `${roomsQuantity} для ${guestQuantity}` : 'не для гостей';
 
   cardElement.querySelector('.popup__text--time').textContent = `Заезд после ${advertisement.offer.checkin}:00, выезд до ${advertisement.offer.checkout}:00`;
 

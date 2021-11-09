@@ -1,31 +1,28 @@
 import './form-validation.js';
 import {addClass, removeClass, openSuccessMessage, showAlert} from './util.js';
 import {sendData} from './api.js';
+import {formElement, mapFiltersFormElement} from './constant.js';
 
-const formAdvertisementElement = document.querySelector('.ad-form');
-const filterAdvertisementElement = document.querySelector('.map__filters');
-const formAdvertisemenFieldsetsElement = document.querySelectorAll('.ad-form fieldset');
+const formAdvertisementFieldsetsElement = document.querySelectorAll('.ad-form fieldset');
 const dataFilter = document.querySelectorAll('[data-filter]');
 
-
 const makeFormsDisabled = () => {
-  addClass(formAdvertisementElement, 'ad-form--disabled');
-  addClass(filterAdvertisementElement, 'ad-form--disabled');
+  addClass(formElement, 'ad-form--disabled');
+  addClass(mapFiltersFormElement, 'ad-form--disabled');
 
-  formAdvertisemenFieldsetsElement.forEach((oneFieldset) => {
+  formAdvertisementFieldsetsElement.forEach((oneFieldset) => {
     oneFieldset.setAttribute('disabled', true);
   });
   dataFilter.forEach((oneElement) => {
     oneElement.setAttribute('disabled', true);
   });
-
 };
 
 const makeFormsActive = () => {
-  removeClass(formAdvertisementElement, 'ad-form--disabled');
-  removeClass(filterAdvertisementElement, 'ad-form--disabled');
+  removeClass(formElement, 'ad-form--disabled');
+  removeClass(mapFiltersFormElement, 'ad-form--disabled');
 
-  formAdvertisemenFieldsetsElement.forEach((oneFieldset) => {
+  formAdvertisementFieldsetsElement.forEach((oneFieldset) => {
     oneFieldset.removeAttribute('disabled');
   });
   dataFilter.forEach((oneElement) => {
@@ -33,16 +30,15 @@ const makeFormsActive = () => {
   });
 };
 
-const formInvalid = () => {
-  const checkForm = document.querySelector('.ad-form');
-  checkForm.addEventListener('invalid', (evt) => {
+const setFormInvalidShadow = () => {
+  formElement.addEventListener('invalid', (evt) => {
     evt.target.classList.add ('shadow');
   }, true);
 };
 
 const setUserFormSubmit = (onSuccess, onErrors) => {
-  formInvalid();
-  formAdvertisementElement.addEventListener('submit', (evt) => {
+  setFormInvalidShadow();
+  formElement.addEventListener('submit', (evt) => {
     evt.preventDefault();
 
     sendData(

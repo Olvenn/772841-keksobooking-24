@@ -1,6 +1,12 @@
 import {NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE} from './constant.js';
 
 const advertisementInputTitleElement = document.querySelector('.ad-form__title');
+const advertisementInputPriceElement = document.querySelector('.ad-form__price');
+const addressElement = document.querySelector('.ad-form input[name="address"]');
+const advertisementSelectRoomElement = document.querySelector('#room_number');
+const advertisementOptionGuestsElements = document.querySelector('#capacity').options;
+const timeinElement = document.querySelector('#timein');
+const timoutElement = document.querySelector('#timeout');
 
 const advertisementTitleInputHandler = () => {
   const valueLength = advertisementInputTitleElement.value.length;
@@ -20,17 +26,16 @@ advertisementInputTitleElement.addEventListener('input', () => {
   advertisementTitleInputHandler();
 });
 
-const advertisementInputPriceElement = document.querySelector('.ad-form__price');
-
 const advertisementPriceInputHandler = () => {
   const valuePrice = advertisementInputPriceElement.value;
+  const placeholderPrice = advertisementInputPriceElement.placeholder;
 
   if (valuePrice === '') {
-    advertisementInputPriceElement.setCustomValidity('Можно вводить только целые числа');
-  } else if (valuePrice < PRICE_VALUE.Min) {
-    advertisementInputPriceElement.setCustomValidity(`Минимальное цена ${PRICE_VALUE.Min} руб.`);
-  } else if (valuePrice > PRICE_VALUE.Max) {
-    advertisementInputPriceElement.setCustomValidity(`Минимальное цена ${PRICE_VALUE.Max} руб.`);
+    advertisementInputPriceElement.setCustomValidity('Введите цену за жилье. Только числа.');
+  } else if (+valuePrice < +placeholderPrice) {
+    advertisementInputPriceElement.setCustomValidity(`Минимальное цена ${placeholderPrice} руб.`);
+  } else if (+valuePrice > PRICE_VALUE.Max) {
+    advertisementInputPriceElement.setCustomValidity(`Максимальная цена ${PRICE_VALUE.Max} руб.`);
   } else {
     advertisementInputPriceElement.setCustomValidity('');
   }
@@ -42,28 +47,23 @@ advertisementInputPriceElement.addEventListener('input', () => {
   advertisementPriceInputHandler();
 });
 
-const advertisementInputAddressElement = document.querySelector('.ad-form input[name="address"]');
-
-advertisementInputAddressElement.addEventListener('keydown', (evt) => {
+addressElement.addEventListener('keydown', (evt) => {
   evt.preventDefault();
 });
 
 const advertisementAddressFocusHandler = () => {
-  const address = advertisementInputAddressElement.value;
+  const address = addressElement.value;
   if (address === '') {
-    advertisementInputAddressElement.setCustomValidity('Выберите точку на карте, где находится ваше жилье.');
+    addressElement.setCustomValidity('Выберите точку на карте, где находится ваше жилье.');
   } else {
-    advertisementInputAddressElement.setCustomValidity('');
+    addressElement.setCustomValidity('');
   }
-  advertisementInputAddressElement.reportValidity();
+  addressElement.reportValidity();
 };
 
-advertisementInputAddressElement.addEventListener('focus', () => {
+addressElement.addEventListener('focus', () => {
   advertisementAddressFocusHandler();
 });
-
-const advertisementSelectRoomElement = document.querySelector('#room_number');
-const advertisementOptionGuestsElements = document.querySelector('#capacity').options;
 
 const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptionsElement) => {
 
@@ -95,17 +95,13 @@ const typeSelectElement = document.querySelector('#type');
 const typeSelectChangeHandler = () => {
   const typeValue = document.querySelector('#type').value;
   const pricePlaceholder = TYPE_PRICE[typeValue];
-  const priceElement = document.querySelector('#price');
-  priceElement.setAttribute('placeholder', pricePlaceholder);
-  priceElement.setAttribute('min', pricePlaceholder);
+  advertisementInputPriceElement.setAttribute('placeholder', pricePlaceholder);
+  advertisementInputPriceElement.setAttribute('min', pricePlaceholder);
 };
 
 typeSelectElement.addEventListener('change', () => {
   typeSelectChangeHandler();
 });
-
-const timeinElement = document.querySelector('#timein');
-const timoutElement = document.querySelector('#timeout');
 
 timeinElement.addEventListener('change', () => {
   timoutElement.selectedIndex = timeinElement.selectedIndex;
