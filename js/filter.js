@@ -60,4 +60,3 @@ const createOffersFiltered = (arrayNotFiltered) => {
 };
 
 export {createOffersFiltered};
-
