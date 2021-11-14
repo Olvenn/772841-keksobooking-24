@@ -1,13 +1,14 @@
-import {NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE} from './constant.js';
+import {NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE, GUEST_ROOMS} from './constant.js';
 
 const advertisementInputTitleElement = document.querySelector('.ad-form__title');
 const advertisementInputPriceElement = document.querySelector('.ad-form__price');
 const addressElement = document.querySelector('.ad-form input[name="address"]');
-const advertisementSelectRoomElement = document.querySelector('#room_number');
-const advertisementOptionGuestsElements = document.querySelector('#capacity').options;
+const advertisementGuestsElements = document.querySelector('#capacity');
+const advertisementOptionGuestsElements = advertisementGuestsElements.options;
+const advertisementRoomsElements = document.querySelector('#room_number');
+const advertisementOptionRoomsElements = advertisementRoomsElements.options;
 const timeinElement = document.querySelector('#timein');
 const timoutElement = document.querySelector('#timeout');
-
 const advertisementTitleInputHandler = () => {
   const valueLength = advertisementInputTitleElement.value.length;
 
@@ -65,9 +66,10 @@ addressElement.addEventListener('focus', () => {
   advertisementAddressFocusHandler();
 });
 
-const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptionsElement) => {
+const setGuestRoomCorrelation = (selectedElement, relationArray, relationElement, relationOptionsElement) => {
 
   const selectedElementValue = selectedElement.value;
+
   const roomValues = relationArray[selectedElementValue];
 
   for (const relationOption of relationOptionsElement) {
@@ -77,17 +79,31 @@ const setRoomGuestCorrelation = (selectedElement, relationArray, relationOptions
       relationOption.removeAttribute('disabled');
     }
   }
+  const valueSelected = roomValues.includes((relationElement.value));
 
-  for (const roomOptions of relationOptionsElement) {
-    roomOptions.removeAttribute('selected');
+  const selectCorrelationItem = relationArray[selectedElementValue][0];
+
+  if(!valueSelected) {
+    document.querySelector(`#${relationElement.id}`).value = selectCorrelationItem;
   }
-  const selectCorrelationItem = ROOM_GUESTS[selectedElementValue][0];
 
-  document.querySelector(`#capacity option[value="${selectCorrelationItem}"]`).setAttribute('selected', 'selected');
 };
 
-advertisementSelectRoomElement.addEventListener('change', () => {
-  setRoomGuestCorrelation(advertisementSelectRoomElement, ROOM_GUESTS , advertisementOptionGuestsElements);
+advertisementGuestsElements.addEventListener('change', () => {
+
+  setGuestRoomCorrelation(advertisementGuestsElements, GUEST_ROOMS, advertisementRoomsElements, advertisementOptionRoomsElements);
+  for (const roomOptions of advertisementGuestsElements.options) {
+    roomOptions.removeAttribute('disabled');
+  }
+
+});
+
+advertisementRoomsElements.addEventListener('change', () => {
+
+  setGuestRoomCorrelation(advertisementRoomsElements, ROOM_GUESTS, advertisementGuestsElements, advertisementOptionGuestsElements);
+  for (const roomOptions of advertisementRoomsElements.options) {
+    roomOptions.removeAttribute('disabled');
+  }
 });
 
 const typeSelectElement = document.querySelector('#type');
@@ -110,3 +126,5 @@ timeinElement.addEventListener('change', () => {
 timoutElement.addEventListener('change', () => {
   timeinElement.selectedIndex = timoutElement.selectedIndex;
 });
+
+export {advertisementOptionGuestsElements, advertisementOptionRoomsElements};

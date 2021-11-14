@@ -40,8 +40,15 @@ const PRICE_FILTER = {
 const ROOM_GUESTS = {
   '1': ['1'],
   '2': ['2', '1'],
-  '3': ['3', '2', '1'],
+  '3': ['1', '2', '3'],
   '100': ['0'],
+};
+
+const GUEST_ROOMS = {
+  '3': ['3'],
+  '2': ['2', '3'],
+  '1': ['3', '2', '1'],
+  '0': ['100'],
 };
 
 const TYPE_PRICE = {
@@ -62,4 +69,4 @@ const formElement = document.querySelector('.ad-form');
 
 const mapFiltersFormElement = document.querySelector('.map__filters');
 
-export {ACCOMMODATIONTYPES, ZOOM, COORDINATES,  NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE, Url, PRICE_FILTER, OFFERSHOWSLENGTH, TIMEALERT, TIMERENDERDELAY, FILE_TYPES, bodyElement, formElement, mapFiltersFormElement};
+export {ACCOMMODATIONTYPES, ZOOM, COORDINATES,  NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE, Url, PRICE_FILTER, OFFERSHOWSLENGTH, TIMEALERT, TIMERENDERDELAY, FILE_TYPES, bodyElement, formElement, mapFiltersFormElement, GUEST_ROOMS};

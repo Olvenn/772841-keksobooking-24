@@ -33,11 +33,15 @@ const setDefaultCoordinates = () => document.querySelector('#address').value = `
 
 
 const formClear = () => {
+
   formElement.reset();
   setDefaultCoordinates();
+
   document.querySelector('#price').setAttribute('placeholder', '1000');
+
   [...formElement.querySelectorAll('.shadow')].forEach((element) => element.classList.remove('shadow'));
 
+  document.querySelector('.ad-form__img-view').src = '#';
 };
 
 const escSuccessKeydownHandler = (evt) => {
