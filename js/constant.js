@@ -69,4 +69,6 @@ const formElement = document.querySelector('.ad-form');
 
 const mapFiltersFormElement = document.querySelector('.map__filters');
 
-export {ACCOMMODATIONTYPES, ZOOM, COORDINATES,  NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE, Url, PRICE_FILTER, OFFERSHOWSLENGTH, TIMEALERT, TIMERENDERDELAY, FILE_TYPES, bodyElement, formElement, mapFiltersFormElement, GUEST_ROOMS};
+const previewElement = document.querySelector('.ad-form__img-view');
+
+export {ACCOMMODATIONTYPES, ZOOM, COORDINATES,  NAME_LENGTH, PRICE_VALUE, ROOM_GUESTS, TYPE_PRICE, Url, PRICE_FILTER, OFFERSHOWSLENGTH, TIMEALERT, TIMERENDERDELAY, FILE_TYPES, bodyElement, formElement, mapFiltersFormElement, GUEST_ROOMS, previewElement};

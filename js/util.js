@@ -1,4 +1,4 @@
-import {COORDINATES, TIMEALERT, bodyElement, formElement} from './constant.js';
+import {COORDINATES, TIMEALERT, bodyElement, formElement, previewElement} from './constant.js';
 const mapElement = document.querySelector('.map__message');
 
 const checkEnding = (number, words) => {
@@ -36,12 +36,9 @@ const formClear = () => {
 
   formElement.reset();
   setDefaultCoordinates();
-
   document.querySelector('#price').setAttribute('placeholder', '1000');
-
   [...formElement.querySelectorAll('.shadow')].forEach((element) => element.classList.remove('shadow'));
-
-  document.querySelector('.ad-form__img-view').src = '#';
+  addClass(previewElement, 'hidden');
 };
 
 const escSuccessKeydownHandler = (evt) => {

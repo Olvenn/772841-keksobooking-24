@@ -1,9 +1,9 @@
-import {FILE_TYPES} from './constant.js';
+import {FILE_TYPES, previewElement} from './constant.js';
+import {removeClass} from './util.js';
 
 const fileChooserAvatarElement = document.querySelector('.ad-form__field input[type=file]');
 const previewAvatarElement = document.querySelector('.ad-form-header__img');
 const fileChooserElement = document.querySelector('.ad-form__input');
-const previewElement = document.querySelector('.ad-form__img-view');
 
 
 const setPhoto = (selectedElement, previewTag) => {
@@ -21,5 +21,6 @@ fileChooserAvatarElement.addEventListener('change', () => {
 });
 
 fileChooserElement.addEventListener('change', () => {
+  removeClass(previewElement, 'hidden');
   setPhoto(fileChooserElement, previewElement);
 });
