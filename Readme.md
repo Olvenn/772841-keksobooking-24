@@ -32,15 +32,15 @@
 
 ### За время работы с проектом использованы:
 
-    Vanilla JavaScript (ECMAScript 6)
-    Node.js и npm
-    Работа с DOM
-    ESLint
-    Локальный сервер Browsersync
-    ECMAScript-модули
-    Работа с сетью (протокол HTTP, формат данных JSON, Fetch API, инструменты для работы с сетевыми запросами)
-    Regular Expression
-    Валидация (метод setCustomValidity,  HTML5 Validation API)
-    Карты Leaflet
-    Устранение дребезга — debounce
-    Работа с Git
+  * Vanilla JavaScript (ECMAScript 6)
+  *  Node.js и npm
+  *  Работа с DOM
+  *  ESLint
+  *  Локальный сервер Browsersync
+  *  ECMAScript-модули
+  *  Работа с сетью (протокол HTTP, формат данных JSON, Fetch API, инструменты для работы с сетевыми запросами)
+  *  Regular Expression
+  *  Валидация (метод setCustomValidity,  HTML5 Validation API)
+  *  Карты Leaflet
+  *  Устранение дребезга — debounce
+  *  Работа с Git
